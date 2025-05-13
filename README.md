@@ -1,7 +1,7 @@
 📘 Student Performance Prediction
 A simple Flask web app that predicts whether a student will pass or fail based on their academic details using a machine learning model.
 
-🔗 Live Demo: [student-performance-prediction-lk5m.onrender.com](https://student-performance-prediction-lk5m.onrender.com)
+🔗 Live Demo: https://student-performance-prediction-k1ah.onrender.com
 
 🔍 Features
 Predicts student performance (Pass/Fail)
