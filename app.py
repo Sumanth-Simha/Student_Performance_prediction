@@ -2,10 +2,11 @@ from flask import Flask, render_template, request
 import joblib
 import numpy as np
 import os
-# Load model
+
+# Load the trained model
 model = joblib.load('student_model.pkl')
 
-# Flask app
+# Initialize Flask app
 app = Flask(__name__)
 
 @app.route('/')
@@ -15,6 +16,7 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
+        # Get input values from form
         studytime = float(request.form['studytime'])
         failures = int(request.form['failures'])
         absences = int(request.form['absences'])
@@ -24,15 +26,15 @@ def predict():
         # Create input array
         input_data = np.array([[studytime, failures, absences, G1, G2]])
 
-        # Prediction
+        # Make prediction
         prediction = model.predict(input_data)
         result = "PASS" if prediction[0] == 1 else "FAIL"
 
         return render_template('index.html', prediction_text=f"Prediction: The student will {result}")
-    except:
-        return render_template('index.html', prediction_text="Please check your inputs!")
+    except Exception as e:
+        return render_template('index.html', prediction_text=f"Error: {e}")
 
+# Port binding for Render
 if __name__ == '__main__':
-    
-    port = int(os.environ.get("PORT", 5000))  # Use Render's port or default to 5000
+    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
